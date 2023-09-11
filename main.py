@@ -3,7 +3,7 @@
 # Press ⌃R to execute it or replace it with your code.
 # Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
 
-from neetcode import array_hash
+from neetcode import array_hash, two_pointers
 
 
 def print_hi(name):
@@ -13,7 +13,7 @@ def print_hi(name):
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    s = array_hash.Solution()
-    # strs = ["eat","tea","tan","ate","nat","bat"]
-    nums = [-1, 1, 0, -3, 3]
-    print("result", s.productExceptSelf(nums))
+    so = two_pointers.Solution()
+    s = " "
+    nums = [0, 0, 0]
+    print("result", so.threeSum(nums))
