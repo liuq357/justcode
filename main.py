@@ -14,5 +14,7 @@ def print_hi(name):
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     so = blind.Solution()
-    nums = [3,2,1,0,4]
-    print("result", so.canJump(nums))
+    matrix =[[1,1,1],[1,0,1],[1,1,1]]
+
+    so.setZeroes(matrix)
+    print("result", matrix)
