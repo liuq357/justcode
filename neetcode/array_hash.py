@@ -1,50 +1,20 @@
 import collections
 import heapq
 from typing import List
+from collections import defaultdict
 
 
 class Solution:
-    def containsDuplicate(self, nums: List[int]) -> bool:
-        return Solution.contains_duplicate2(nums, 0, len(nums) - 1)
-
     @staticmethod
-    def containsDuplicate2(nums: List[int]) -> bool:
-        nums_dict = {}
+    def contain_duplicate(nums: List[int]) -> bool:
+        s = set()
         for v in nums:
-            if v in nums_dict:
+            if v in s:
                 return True
-            nums_dict[v] = 0
+            else:
+                s.add(v)
 
         return False
-
-    @staticmethod
-    def contains_duplicate2(nums: List[int], low, high: int) -> bool:
-        if low < high:
-            duplicated, pi = Solution.duplicate_partition(nums, low, high)
-            if duplicated:
-                return True
-
-            if Solution.contains_duplicate2(nums, low, pi - 1):
-                return True
-            if Solution.contains_duplicate2(nums, pi + 1, high):
-                return True
-
-        return False
-
-    @staticmethod
-    def duplicate_partition(nums: List[int], low, high: int) -> (bool, int):
-        pivot = nums[high]
-        i = low - 1
-        for j in range(low, high):
-            if nums[j] == pivot:
-                return True, i + 1
-
-            if nums[j] < pivot:
-                i += 1
-                nums[i], nums[j] = nums[j], nums[i]
-
-        nums[i + 1], nums[high] = nums[high], nums[i + 1]
-        return False, i + 1
 
     @classmethod
     def quick_sort(cls, nums: List[int], low, high: int):
@@ -65,25 +35,8 @@ class Solution:
         nums[i + 1], nums[high] = nums[high], nums[i + 1]
         return i + 1
 
-    def isAnagram(self, s: str, t: str) -> bool:
-        if len(s) != len(t):
-            return False
-
-        m = {}
-        for c in s:
-            if c in m:
-                m[c] += 1
-            else:
-                m[c] = 1
-
-        for c in t:
-            if m.get(c, 0) == 0:
-                return False
-            m[c] -= 1
-
-        return True
-
-    def isAnagram2(self, s: str, t: str) -> bool:
+    @staticmethod
+    def is_anagram(s: str, t: str) -> bool:
         if len(s) != len(t):
             return False
 
@@ -126,38 +79,50 @@ class Solution:
 
         return [a_idx, b_idx]
 
-    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
-        word_map = {}
+    @staticmethod
+    def two_integer_sum(nums, target):
+        prev_map = {}
+        for i in range(len(nums)):
+            need = target - nums[i]
+            if need in prev_map:
+                return [prev_map[need], i]
+            else:
+                prev_map[nums[i]] = i
+
+        return []
+
+    @staticmethod
+    def group_anagrams(strs: List[str]) -> List[List[str]]:
+        res = defaultdict(list)
         for s in strs:
-            sorted_s = "".join(sorted(s))
-            group_strs = word_map.get(sorted_s, [])
-            group_strs.append(s)
-            word_map[sorted_s] = group_strs
+            count = [0] * 26
+            for c in s:
+                count[ord(c) - ord('a')] += 1
+            res[tuple(count)].append(s)
 
-        result = []
-        for group_strs in word_map.values():
-            result.append(group_strs)
+        return [v for v in res.values()]
 
-        return result
+    @staticmethod
+    def top_k_frequent(nums, k):
+        count = defaultdict(int)
+        for n in nums:
+            count[n] += 1
 
-    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
-        count_map = {}
-        for num in nums:
-            count_map[num] = count_map.get(num, 0) + 1
+        freq = [[] for i in range(1 + len(nums))]
+        for n, c in count.items():
+            freq[c].append(n)
 
-        top_k = [0] * k
-        heapq.heapify(top_k)
-        for count in count_map.values():
-            heapq.heappush(top_k, count)
-            heapq.heappop(top_k)
+        res = []
+        print('freq', freq)
+        for i in range(len(freq) - 1, 0, -1):
+            if len(freq[i]) > 0:
+                print('i', i, freq[i])
+                res.extend(freq[i])
+                k -= len(freq[i])
+            if k <= 0:
+                return res
 
-        result = []
-        k_small = heapq.heappop(top_k)
-        for num, count in count_map.items():
-            if count >= k_small:
-                result.append(num)
-
-        return result
+        return res
 
     def productExceptSelf(self, nums: List[int]) -> List[int]:
         res = [0] * len(nums)
@@ -173,6 +138,28 @@ class Solution:
             p *= nums[j]
 
         res[0] = p
+
+        return res
+
+    @staticmethod
+    def encode(strs: List[str]) -> str:
+        # number of char and a '$' sign followed by string.
+        delimiter = "$"
+        res = ""
+        for s in strs:
+            count = len(s)
+            res += str(count) + delimiter + s
+
+        return res
+
+    @staticmethod
+    def decode(s: str) -> List[str]:
+        res = []
+        while len(s) > 0:
+            idx = s.find('$')
+            count = int(s[:idx])
+            res.append(s[idx + 1:idx + 1 + count])
+            s = s[idx + count + 1:]
 
         return res
 
@@ -281,4 +268,3 @@ class Solution:
                 res = t - h + 1
 
         return res
-
