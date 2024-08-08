@@ -13,8 +13,8 @@ def print_hi(name):
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    so = blind.Solution()
-    matrix =[[1,1,1],[1,0,1],[1,1,1]]
+    so = array_hash.Solution()
+    nums = [-1,0,1,2,3]
 
-    so.setZeroes(matrix)
-    print("result", matrix)
+    res = so.product_except_self(nums)
+    print('result', res)

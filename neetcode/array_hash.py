@@ -124,22 +124,18 @@ class Solution:
 
         return res
 
-    def productExceptSelf(self, nums: List[int]) -> List[int]:
-        res = [0] * len(nums)
-        res[0] = nums[0]
-        for i in range(1, len(nums) - 1):
-            res[i] = nums[i] * res[i - 1]
+    @staticmethod
+    def product_except_self(nums: List[int]) -> List[int]:
+        result = [1] * len(nums)
+        for i in range(1, len(nums), 1):
+            result[i] = result[i - 1] * nums[i - 1]
 
-        print(res)
+        temp = 1
+        for i in range(len(nums) - 1, -1, -1):
+            result[i] = result[i] * temp
+            temp *= nums[i]
 
-        p = 1
-        for j in range(len(nums) - 1, 0, -1):
-            res[j] = p * res[j - 1]
-            p *= nums[j]
-
-        res[0] = p
-
-        return res
+        return result
 
     @staticmethod
     def encode(strs: List[str]) -> str:
