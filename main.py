@@ -3,7 +3,7 @@
 # Press ⌃R to execute it or replace it with your code.
 # Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
 
-from neetcode import array_hash, blind
+from neetcode import array_hash, two_pointers
 
 
 def print_hi(name):
@@ -13,8 +13,8 @@ def print_hi(name):
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    so = array_hash.Solution()
-    nums = [2, 20, 4, 10, 3, 4, 5]
+    so = two_pointers.Solution()
+    nums = [-1, 0, 1, 2, -1, -4]
 
-    res = so.longest_consecutive(nums)
+    res = so.three_sum(nums)
     print('result', res)

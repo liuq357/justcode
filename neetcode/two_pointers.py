@@ -2,47 +2,59 @@ from typing import List
 
 
 class Solution:
-    def isPalindrome(self, s: str) -> bool:
-        head = 0
-        tail = len(s) - 1
-        while head < tail:
-            while not s[head].isalnum() and head < tail:
-                head += 1
-            while not s[tail].isalnum() and tail > head:
-                tail -= 1
-
-            if s[head].lower() != s[tail].lower():
+    @staticmethod
+    def is_palindrome(s: str):
+        h = 0
+        t = len(s) - 1
+        while h < t:
+            while not s[h].isalnum() and h < t:
+                h += 1
+            while not s[t].isalnum() and h < t:
+                t -= 1
+            if s[h].lower() != s[t].lower():
                 return False
 
-            head += 1
-            tail -= 1
+            h += 1
+            t -= 1
 
         return True
 
-    def threeSum(self, nums: List[int]) -> List[List[int]]:
-        nums.sort()
+    @staticmethod
+    def two_sum(numbers: List[int], target: int) -> List[int]:
+        h, t = 0, len(numbers) - 1
+        while h < t:
+            if numbers[h] + numbers[t] < target:
+                h += 1
+            elif numbers[h] + numbers[t] > target:
+                t -= 1
+            else:
+                return [h + 1, t + 1]
 
-        result = []
-        i = 0
-        while i < len(nums) - 2:
+        return []
+
+    @staticmethod
+    def three_sum(nums: List[int]) -> List[List[int]]:
+        nums.sort()
+        res = []
+        for i in range(len(nums)):
             j, k = i + 1, len(nums) - 1
+            if nums[i] > 0:
+                break
+
+            if i > 0 and nums[i - 1] == nums[i]:
+                continue
+
             while j < k:
                 s = nums[i] + nums[j] + nums[k]
                 if s == 0:
-                    result.append([nums[i], nums[j], nums[k]])
-
-                if s <= 0:
+                    res.append([nums[i], nums[j], nums[k]])
                     j += 1
-                    while j < len(nums) - 1 and nums[j] == nums[j - 1]:
-                        j += 1
-
-                if s >= 0:
                     k -= 1
-                    while k > 0 and nums[k] == nums[k + 1]:
-                        k -= 1
+                    while j < k and nums[j] == nums[j - 1]:
+                        j += 1
+                elif s < 0:
+                    j += 1
+                else:
+                    k -= 1
 
-            i += 1
-            while i < len(nums) - 2 and nums[i] == nums[i - 1]:
-                i += 1
-
-        return result
+        return res
