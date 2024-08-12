@@ -113,10 +113,8 @@ class Solution:
             freq[c].append(n)
 
         res = []
-        print('freq', freq)
         for i in range(len(freq) - 1, 0, -1):
             if len(freq[i]) > 0:
-                print('i', i, freq[i])
                 res.extend(freq[i])
                 k -= len(freq[i])
             if k <= 0:
@@ -159,46 +157,8 @@ class Solution:
 
         return res
 
-    def isValidSudoku(self, board: List[List[str]]) -> bool:
-        # valid row
-        for r in board:
-            slots = [0] * 10
-            for num_str in r:
-                if num_str == ".":
-                    continue
-
-                slots[int(num_str)] += 1
-                if slots[int(num_str)] > 1:
-                    return False
-
-        # valid column
-        for c in range(0, 9):
-            slots = [0] * 10
-            for r in range(0, 9):
-                num_str = board[r][c]
-                if num_str == ".":
-                    continue
-                slots[int(num_str)] += 1
-                if slots[int(num_str)] > 1:
-                    return False
-
-        # valid sub-boxes
-        for r in range(0, 9, 3):
-            for c in range(0, 9, 3):
-                slots = [0] * 10
-                for i in range(r, r + 3):
-                    for j in range(c, c + 3):
-                        num_str = board[i][j]
-                        print(f'{i}.{j}->{num_str}')
-                        if num_str == ".":
-                            continue
-                        slots[int(num_str)] += 1
-                        if slots[int(num_str)] > 1:
-                            return False
-
-        return True
-
-    def isValidSudoku2(self, board: List[List[str]]) -> bool:
+    @staticmethod
+    def is_valid_sudoku(board: List[List[str]]) -> bool:
         rows = collections.defaultdict(set)
         columns = collections.defaultdict(set)
         boxes = collections.defaultdict(set)
@@ -219,48 +179,18 @@ class Solution:
 
         return True
 
-    def longestConsecutive(self, nums: List[int]) -> int:
-        processed = set()
-        head_tail = {}
-        tail_head = {}
-        for num in nums:
-            if num in processed:
-                continue
+    @staticmethod
+    def longest_consecutive(nums: List[int]) -> int:
+        s = set(nums)
+        longest = 0
 
-            print("=>", num)
+        for n in nums:
+            # check whether n is the starting number of a consecutive sequence
+            if (n - 1) not in s:
+                length = 0
+                while (n + length) in s:
+                    length += 1
 
-            extended = False
-            # extend head_tail
-            if num + 1 in head_tail:
-                extended = True
-                tail = head_tail.pop(num + 1)
-                head_tail[num] = tail
-                tail_head[tail] = num
+                longest = max(longest, length)
 
-            # extend tail_head
-            if num - 1 in tail_head:
-                extended = True
-                head = tail_head.pop(num - 1)
-                tail_head[num] = head
-                head_tail[head] = num
-
-            # merge
-            if extended and num in head_tail and num in tail_head:
-                head_tail[tail_head[num]] = head_tail[num]
-                tail_head[head_tail[num]] = tail_head[num]
-                head_tail.pop(num)
-                tail_head.pop(num)
-
-            # no extend and merge
-            if not extended:
-                head_tail[num] = num
-                tail_head[num] = num
-
-            processed.add(num)
-
-        res = 0
-        for h, t in head_tail.items():
-            if t - h + 1 > res:
-                res = t - h + 1
-
-        return res
+        return longest
