@@ -58,3 +58,43 @@ class Solution:
                     k -= 1
 
         return res
+
+    @staticmethod
+    def max_area(heights: List[int]) -> int:
+        l, r = 0, len(heights) - 1
+        m_area = 0
+        while l < r:
+            area = (r - l) * min(heights[l], heights[r])
+            m_area = max(m_area, area)
+            if heights[l] <= heights[r]:
+                j = l + 1
+                while j < r and heights[j] <= heights[l]:
+                    j += 1
+                l = j
+            else:
+                k = r - 1
+                while l < k and heights[k] <= heights[r]:
+                    k -= 1
+                r = k
+
+        return m_area
+
+    @staticmethod
+    def trap(height: List[int]) -> int:
+        left, right = 0, len(height) - 1
+        area = 0
+        while left < right:
+            if height[left] <= height[right]:
+                j = left + 1
+                while j < right and height[j] <= height[left]:
+                    area += height[left] - height[j]
+                    j += 1
+                left = j
+            else:
+                k = right - 1
+                while left < k and height[k] <= height[right]:
+                    area += height[right] - height[k]
+                    k -= 1
+                right = k
+
+        return area

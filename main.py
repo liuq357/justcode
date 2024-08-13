@@ -14,7 +14,7 @@ def print_hi(name):
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     so = two_pointers.Solution()
-    nums = [-1, 0, 1, 2, -1, -4]
+    nums = [0, 2, 2]
 
-    res = so.three_sum(nums)
+    res = so.trap(nums)
     print('result', res)
