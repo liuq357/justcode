@@ -3,7 +3,7 @@
 # Press ⌃R to execute it or replace it with your code.
 # Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
 
-from neetcode import array_hash, two_pointers
+from neetcode import array_hash, two_pointers, sliding_window
 
 
 def print_hi(name):
@@ -13,8 +13,10 @@ def print_hi(name):
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    so = two_pointers.Solution()
-    nums = [0, 2, 2]
+    so = sliding_window.Solution()
+    nums = [10, 8, 7, 5, 2]
+    s = "x"
+    t = "yz"
 
-    res = so.trap(nums)
+    res = so.min_window(s, t)
     print('result', res)
