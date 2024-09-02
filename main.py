@@ -14,9 +14,8 @@ def print_hi(name):
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     so = sliding_window.Solution()
-    nums = [10, 8, 7, 5, 2]
-    s = "x"
-    t = "yz"
+    nums = [7, 2, 4]
+    k = 2
 
-    res = so.min_window(s, t)
+    res = so.max_sliding_window(nums, k)
     print('result', res)
