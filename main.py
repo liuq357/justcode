@@ -3,7 +3,12 @@
 # Press ⌃R to execute it or replace it with your code.
 # Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
 
-from neetcode import array_hash, two_pointers, sliding_window
+from neetcode import (
+    array_hash,
+    two_pointers,
+    sliding_window,
+    stack
+)
 
 
 def print_hi(name):
@@ -13,9 +18,8 @@ def print_hi(name):
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    so = sliding_window.Solution()
-    nums = [7, 2, 4]
-    k = 2
+    so = stack.Solution()
+    s = "{"
 
-    res = so.max_sliding_window(nums, k)
+    res = so.is_valid(s)
     print('result', res)
