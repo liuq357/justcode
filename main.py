@@ -19,7 +19,6 @@ def print_hi(name):
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     so = stack.Solution()
-    s = "{"
-
-    res = so.is_valid(s)
-    print('result', res)
+    tokens = ["4", "13", "5", "/", "+"]
+    res = so.eval_RPN(tokens)
+    print("res", res)
